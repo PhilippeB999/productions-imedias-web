@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Le tableau de bord enseignant Quest : suivi de la progression d'un groupe par module, avec alertes quand un élève coince. Anonyme et conforme à la Loi 25.">
+<link rel="icon" href="favicon.svg">
+<title>Tableau de bord enseignant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f4f0e8; --card:#fffdf9; --ink:#15192e; --ink-soft:#454a63; --faint:#767a90;
+  --red:#d42a1c; --red-deep:#a81e12; --red-tint:#fbe7e4;
+  --ok:#1c8a58; --ok-tint:#dff0e7; --warn:#d99a2e; --warn-tint:#faeecf;
+  --crit:#e0362a; --crit-tint:#fbdedb; --idle:#e4ddd1; --idle-ink:#a49a89;
+  --hair:#e7dfd0; --line:#efe9dd; --shadow:0 18px 46px rgba(18,25,58,.10);
+  --disp:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#f4f0e8; --card:#fffdf9; --ink:#15192e; --ink-soft:#454a63; --faint:#767a90;
+  --red:#d42a1c; --red-deep:#a81e12; --red-tint:#fbe7e4; --ok:#1c8a58; --ok-tint:#dff0e7;
+  --warn:#d99a2e; --warn-tint:#faeecf; --crit:#e0362a; --crit-tint:#fbdedb; --idle:#e4ddd1;
+  --idle-ink:#a49a89; --hair:#e7dfd0; --line:#efe9dd;
+}}
+:root[data-theme="dark"]{
+  --paper:#f4f0e8; --card:#fffdf9; --ink:#15192e; --ink-soft:#454a63; --faint:#767a90;
+  --red:#d42a1c; --red-deep:#a81e12; --red-tint:#fbe7e4; --ok:#1c8a58; --ok-tint:#dff0e7;
+  --warn:#d99a2e; --warn-tint:#faeecf; --crit:#e0362a; --crit-tint:#fbdedb; --idle:#e4ddd1;
+  --idle-ink:#a49a89; --hair:#e7dfd0; --line:#efe9dd;
+}
+html{color-scheme:light;background:var(--paper);}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased;}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums;}
+.wrap{max-width:1080px;margin:0 auto;padding:26px 20px 60px;}
+
+/* top bar */
+.topbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:8px;}
+.logo{display:flex;align-items:center;gap:11px;}
+.logo .mk{width:44px;height:44px;border-radius:12px;background:linear-gradient(140deg,var(--red),var(--red-deep));
+  display:flex;align-items:center;justify-content:center;font-size:23px;box-shadow:0 6px 14px rgba(212,42,28,.3);}
+.logo h1{font-family:var(--disp);font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1.1;}
+.logo .sub{font-size:12.5px;color:var(--faint);}
+.spacer{flex:1;}
+.teacher{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--hair);
+  border-radius:100px;padding:6px 8px 6px 14px;font-size:13.5px;font-weight:600;color:var(--ink-soft);}
+.teacher .pic{width:28px;height:28px;border-radius:50%;background:var(--red-tint);display:flex;align-items:center;justify-content:center;font-size:15px;}
+
+/* class tabs */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 22px;}
+.tab{background:var(--card);border:1px solid var(--hair);border-radius:100px;padding:8px 16px;font-size:13.5px;
+  font-weight:600;color:var(--ink-soft);cursor:default;display:flex;align-items:center;gap:7px;}
+.tab.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+.tab .n{font-family:var(--mono);opacity:.6;font-size:12px;}
+.tab.active .n{opacity:.8;}
+
+/* KPI row */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.kpi{background:var(--card);border:1px solid var(--hair);border-radius:18px;padding:18px 20px;box-shadow:0 2px 8px rgba(18,25,58,.04);}
+.kpi .lab{font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;font-weight:600;display:flex;align-items:center;gap:6px;}
+.kpi .val{font-family:var(--disp);font-weight:800;font-size:34px;line-height:1.1;margin-top:6px;}
+.kpi .val small{font-size:16px;color:var(--faint);font-weight:600;}
+.kpi.alert .val{color:var(--crit);}
+.kpi.ok .val{color:var(--ok);}
+
+/* alert callout */
+.callout{display:flex;align-items:flex-start;gap:13px;background:var(--crit-tint);border:1px solid #f3b9b2;
+  border-radius:16px;padding:15px 18px;margin-bottom:22px;font-size:14px;color:#8a1a10;}
+.callout .ic{font-size:20px;line-height:1.2;}
+.callout b{font-weight:700;}
+
+/* matrix */
+.panel{background:var(--card);border:1px solid var(--hair);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap;gap:10px;}
+.panel-head h2{font-family:var(--disp);font-size:18px;font-weight:700;}
+.panel-head .hint{font-size:12.5px;color:var(--faint);}
+.scroll{overflow-x:auto;}
+table{border-collapse:collapse;width:100%;min-width:760px;}
+th,td{padding:0;text-align:center;}
+thead th{position:sticky;top:0;background:var(--card);}
+.colhead{padding:12px 6px 14px;border-bottom:1px solid var(--line);}
+.colhead .ic{font-size:19px;}
+.colhead .t{font-size:10.5px;color:var(--ink-soft);font-weight:600;line-height:1.15;margin-top:4px;display:block;max-width:74px;margin-inline:auto;}
+.stu-h{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);font-size:11px;color:var(--faint);
+  text-transform:uppercase;letter-spacing:.08em;font-weight:600;position:sticky;left:0;background:var(--card);z-index:3;min-width:210px;}
+tbody tr{border-bottom:1px solid var(--line);}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover td{background:#faf7f1;}
+.stu{text-align:left;padding:11px 16px;position:sticky;left:0;background:var(--card);z-index:2;}
+tbody tr:hover .stu{background:#faf7f1;}
+.stu .row1{display:flex;align-items:center;gap:10px;}
+.stu .ava{font-size:22px;}
+.stu .nm{font-weight:600;font-size:14px;}
+.stu .meta{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:2px;margin-left:32px;}
+.stu.watch .nm::after{content:"⚠";color:var(--crit);margin-left:6px;font-size:13px;}
+.cell{width:56px;height:46px;}
+.pip{width:30px;height:30px;border-radius:9px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;}
+.v .pip{background:var(--ok-tint);color:var(--ok);}
+.a .pip{background:var(--warn-tint);color:var(--warn);}
+.r .pip{background:var(--crit-tint);color:var(--crit);position:relative;}
+.r .pip::after{content:"";position:absolute;top:-3px;right:-3px;width:11px;height:11px;border-radius:50%;
+  background:var(--crit);border:2px solid var(--card);animation:pulse 1.8s ease-in-out infinite;}
+.i .pip{background:var(--idle);color:var(--idle-ink);}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.25);opacity:.7}}
+.prog-c{padding:11px 16px;min-width:120px;}
+.pbar{height:9px;border-radius:100px;background:var(--line);overflow:hidden;}
+.pbar>i{display:block;height:100%;border-radius:100px;background:linear-gradient(90deg,var(--red),var(--warn));}
+.prog-c .n{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);margin-top:5px;display:block;text-align:right;}
+
+/* legend */
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:18px;font-size:13px;color:var(--ink-soft);align-items:center;}
+.legend .it{display:flex;align-items:center;gap:7px;}
+.legend .sw{width:18px;height:18px;border-radius:6px;}
+.sw.v{background:var(--ok-tint);border:1px solid var(--ok);}
+.sw.a{background:var(--warn-tint);border:1px solid var(--warn);}
+.sw.r{background:var(--crit-tint);border:1px solid var(--crit);}
+.sw.i{background:var(--idle);border:1px solid #cfc7b8;}
+
+.priv{margin-top:22px;font-size:13px;color:var(--faint);display:flex;gap:9px;align-items:flex-start;
+  background:var(--card);border:1px solid var(--hair);border-radius:14px;padding:14px 18px;}
+.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:26px;padding-top:20px;border-top:1px solid var(--hair);}
+.imedias{font-family:var(--disp);font-weight:800;font-size:17px;}
+.imedias b{color:var(--red);}
+.url{font-family:var(--mono);font-size:13.5px;color:var(--red);font-weight:600;background:var(--red-tint);padding:8px 15px;border-radius:100px;}
+.disc{font-size:12px;color:var(--faint);margin-top:16px;text-align:center;}
+
+@media (max-width:720px){
+  .kpis{grid-template-columns:repeat(2,1fr);}
+  .logo h1{font-size:17px;}
+}
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <a class="tb-back" href="/">← Productions iMédias</a>
+  <a class="tb-cta" href="/#quest">Voir les applications →</a>
+</div>
+<style>
+.site-topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:11px 22px;background:rgba(244,240,232,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--hair);}
+.tb-back{font-family:var(--body);font-weight:600;font-size:14px;color:var(--ink-soft);text-decoration:none;}
+.tb-back:hover{color:var(--red);}
+.tb-cta{font-family:var(--body);font-weight:700;font-size:13.5px;color:#fff;text-decoration:none;
+  background:linear-gradient(180deg,var(--red),var(--red-deep));padding:9px 16px;border-radius:100px;box-shadow:0 4px 12px rgba(212,42,28,.25);}
+.tb-cta:hover{filter:brightness(1.05);}
+</style>
+<div class="wrap">
+  <div class="topbar">
+    <div class="logo">
+      <div class="mk">🛡️</div>
+      <div><h1>Tableau de bord</h1><div class="sub">Quest · espace enseignant</div></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="teacher"><span class="pic">👩‍🏫</span> Mme Tremblay · CFP Démo</div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active">⚡ Électricité 101 <span class="n">24</span></div>
+    <div class="tab">🔥 Soudage 201 <span class="n">18</span></div>
+    <div class="tab">🔨 Charpenterie 105 <span class="n">21</span></div>
+    <div class="tab">＋ Ajouter une classe</div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="lab">👥 Élèves</div><div class="val">8</div></div>
+    <div class="kpi ok"><div class="lab">📈 Progression moy.</div><div class="val">49<small>%</small></div></div>
+    <div class="kpi alert"><div class="lab">🔴 À surveiller</div><div class="val">2</div></div>
+    <div class="kpi"><div class="lab">✅ Modules maîtrisés</div><div class="val">25<small>/64</small></div></div>
+  </div>
+
+  <div class="callout">
+    <span class="ic">🔴</span>
+    <div><b>2 élèves ont besoin d'aide.</b> Loup gris coince sur <b>Circuits de base</b> et Castor sur <b>Câblage résidentiel</b> (score sous 60 % après 2 essais). La pastille rouge signale où intervenir.</div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Groupe Électricité 101 — progression par module</h2>
+      <span class="hint">DEP 5295 · mise à jour en direct</span>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th class="stu-h">Élève</th>
+            <th class="colhead"><div class="ic">🦺</div><span class="t">Santé-sécurité</span></th>
+            <th class="colhead"><div class="ic">⚡</div><span class="t">Circuits de base</span></th>
+            <th class="colhead"><div class="ic">🧰</div><span class="t">Outils, mesures</span></th>
+            <th class="colhead"><div class="ic">📐</div><span class="t">Lecture de plans</span></th>
+            <th class="colhead"><div class="ic">🏠</div><span class="t">Câblage résid.</span></th>
+            <th class="colhead"><div class="ic">📖</div><span class="t">Code constr.</span></th>
+            <th class="colhead"><div class="ic">⚙️</div><span class="t">Moteurs</span></th>
+            <th class="colhead"><div class="ic">🔍</div><span class="t">Dépannage</span></th>
+            <th class="colhead"><span class="t">Progression</span></th>
+          </tr>
+        </thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="it"><span class="sw v"></span> Maîtrisé (palier Avancé réussi)</div>
+    <div class="it"><span class="sw a"></span> En cours</div>
+    <div class="it"><span class="sw r"></span> Coince — à surveiller</div>
+    <div class="it"><span class="sw i"></span> Non commencé</div>
+  </div>
+
+  <div class="priv">🔒 <span><b>Vie privée (Loi 25).</b> Les élèves apparaissent sous un <b>totem anonyme</b> (animal + pseudonyme) — l'enseignant suit la progression sans qu'aucune donnée personnelle ne soit exposée ni stockée par l'application.</span></div>
+
+  <div class="foot">
+    <div class="imedias">Productions <b>iMédias</b></div>
+    <span class="url">enseignant.questedu.ca</span>
+  </div>
+  <p class="disc">Maquette de démonstration — données de classe fictives. Le tableau de bord réel se connecte de façon sécurisée et propose un mode démo.</p>
+</div>
+
+<script>
+var MODS=["Santé-sécurité","Circuits de base","Outils","Plans","Câblage","Code","Moteurs","Dépannage"];
+var STUDENTS=[
+  {ava:"🦅",nm:"Aigle royal",lvl:"Expert·e",xp:2050,cells:"vvvvvvvv",prog:100},
+  {ava:"🦉",nm:"Hibou argenté",lvl:"Chevronné·e",xp:1240,cells:"vvvvvavv",prog:88},
+  {ava:"🦊",nm:"Renard roux",lvl:"Compétent·e",xp:720,cells:"vvvaa...",prog:60},
+  {ava:"🦫",nm:"Castor",lvl:"Compétent·e",xp:540,cells:"vvvar...",prog:52,watch:true},
+  {ava:"🐺",nm:"Loup gris",lvl:"Apprenti·e",xp:320,cells:"vra.....",prog:34,watch:true},
+  {ava:"🦌",nm:"Chevreuil",lvl:"Apprenti·e",xp:260,cells:"vaa.....",prog:30},
+  {ava:"🦡",nm:"Blaireau",lvl:"Novice",xp:120,cells:"v.......",prog:18},
+  {ava:"🐢",nm:"Tortue",lvl:"Novice",xp:60,cells:"a.......",prog:10}
+];
+var SYM={v:"✓",a:"◐",r:"!",".":""};
+var CLS={v:"v",a:"a",r:"r",".":"i"};
+var tb=document.getElementById("tb");
+STUDENTS.forEach(function(s){
+  var tr=document.createElement("tr");
+  var cells=s.cells.split("").map(function(c,i){
+    return '<td class="cell '+CLS[c]+'" title="'+MODS[i]+'"><div class="pip">'+SYM[c]+'</div></td>';
+  }).join("");
+  tr.innerHTML='<td class="stu '+(s.watch?"watch":"")+'"><div class="row1"><span class="ava">'+s.ava+'</span>'+
+    '<span><span class="nm">'+s.nm+'</span></span></div>'+
+    '<div class="meta">'+s.lvl+' · '+s.xp+' XP</div></td>'+cells+
+    '<td class="prog-c"><div class="pbar"><i style="width:'+s.prog+'%"></i></div><span class="n">'+s.prog+'%</span></td>';
+  tb.appendChild(tr);
+});
+</script>
+</body>
+</html>
