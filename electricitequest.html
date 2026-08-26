@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Découvrez comment un élève progresse dans ÉlectricitéQuest : niveaux, avatar évolutif, badges, trophées et classement. Une application de révision gamifiée de Productions iMédias.">
+<link rel="icon" href="favicon.svg">
+<title>ÉlectricitéQuest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f2ea; --card:#fffdf9; --ink:#15192e; --ink-soft:#454a63; --faint:#6c7089;
+  --blue:#1f47c9; --blue-deep:#12296e; --blue-tint:#e9eefc; --blue-line:#c9d4f5;
+  --gold:#e2a327; --gold-bright:#ffcf5c; --gold-tint:#fbecc8;
+  --red:#d42a1c; --green:#1c8a58; --green-tint:#e2f2ea;
+  --hair:#e7dfd0; --shadow:24px 24px 60px rgba(18,25,58,.10);
+  --disp:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+/* Forcer le thème clair quel que soit le réglage de l'appareil (iPhone en mode sombre inclus) */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#f6f2ea; --card:#fffdf9; --ink:#15192e; --ink-soft:#454a63; --faint:#6c7089;
+  --blue:#1f47c9; --blue-deep:#12296e; --blue-tint:#e9eefc; --blue-line:#c9d4f5;
+  --gold:#e2a327; --gold-bright:#ffcf5c; --gold-tint:#fbecc8; --red:#d42a1c;
+  --green:#1c8a58; --green-tint:#e2f2ea; --hair:#e7dfd0;
+}}
+:root[data-theme="dark"]{
+  --paper:#f6f2ea; --card:#fffdf9; --ink:#15192e; --ink-soft:#454a63; --faint:#6c7089;
+  --blue:#1f47c9; --blue-deep:#12296e; --blue-tint:#e9eefc; --blue-line:#c9d4f5;
+  --gold:#e2a327; --gold-bright:#ffcf5c; --gold-tint:#fbecc8; --red:#d42a1c;
+  --green:#1c8a58; --green-tint:#e2f2ea; --hair:#e7dfd0;
+}
+html{color-scheme:light;background:var(--paper);}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;}
+.wrap{max-width:1060px;margin:0 auto;padding:0 22px;}
+h1,h2,h3{font-family:var(--disp);line-height:1.05;letter-spacing:-.02em;text-wrap:balance;}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums;}
+section{padding:64px 0;position:relative;}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--blue);font-weight:600;display:flex;align-items:center;gap:9px;}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--gold);border-radius:2px;}
+.lead{font-size:19px;color:var(--ink-soft);max-width:60ch;}
+
+/* ---------- HERO ---------- */
+.hero{padding:70px 0 40px;position:relative;}
+.hero-grid{display:grid;grid-template-columns:1.35fr .9fr;gap:40px;align-items:center;}
+.badge-icon{width:150px;height:150px;filter:drop-shadow(0 16px 30px rgba(18,25,58,.28));}
+.hero h1{font-size:clamp(46px,8vw,86px);font-weight:800;margin:14px 0 8px;
+  background:linear-gradient(180deg,var(--blue) 0%,var(--blue-deep) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.hero .spark{color:var(--gold);-webkit-text-fill-color:var(--gold);}
+.hero-sub{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3vw,27px);color:var(--ink);margin-bottom:16px;line-height:1.15;}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px;}
+.chip{background:var(--card);border:1px solid var(--hair);border-radius:100px;padding:8px 15px;
+  font-size:13.5px;font-weight:600;color:var(--ink-soft);display:flex;align-items:center;gap:7px;box-shadow:0 2px 6px rgba(18,25,58,.05);}
+.chip b{color:var(--blue);font-family:var(--mono);}
+.hero-art{position:relative;display:flex;align-items:center;justify-content:center;}
+.orb{position:absolute;width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle at 40% 35%,rgba(255,207,92,.5),rgba(31,71,201,.14) 55%,transparent 72%);
+  filter:blur(6px);z-index:0;}
+
+/* persona */
+.persona{margin-top:34px;background:linear-gradient(100deg,var(--blue-deep),var(--blue));
+  color:#fff;border-radius:20px;padding:20px 24px;display:flex;align-items:center;gap:18px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.persona::after{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 90% 20%,rgba(255,207,92,.35),transparent 42%);pointer-events:none;}
+.persona .ava{font-size:44px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));}
+.persona .txt{font-size:15px;line-height:1.5;}
+.persona .txt b{font-family:var(--disp);font-weight:700;font-size:17px;}
+.persona .txt .mono{color:var(--gold-bright);}
+
+/* ---------- SECTION HEADERS ---------- */
+.s-head{margin-bottom:34px;}
+.s-head h2{font-size:clamp(30px,4.6vw,46px);font-weight:800;margin:12px 0 10px;}
+.s-num{font-family:var(--mono);color:var(--gold);font-weight:600;font-size:14px;}
+
+/* ---------- PROGRESSION LADDER ---------- */
+.ladder{background:var(--card);border:1px solid var(--hair);border-radius:24px;padding:30px 26px 22px;box-shadow:var(--shadow);}
+.evo{display:flex;justify-content:space-between;gap:6px;position:relative;padding:8px 0 0;}
+.evo::before{content:"";position:absolute;left:5%;right:5%;top:44px;height:4px;border-radius:4px;
+  background:linear-gradient(90deg,var(--blue-line),var(--blue) 45%,var(--gold) 100%);z-index:0;}
+.step{position:relative;z-index:1;flex:1;text-align:center;}
+.step .ava{font-size:clamp(30px,5vw,46px);line-height:1;filter:drop-shadow(0 6px 8px rgba(18,25,58,.14));
+  transition:transform .5s ease;display:inline-block;}
+.step:hover .ava{transform:translateY(-5px) scale(1.08);}
+.step .lvl{font-family:var(--disp);font-weight:700;font-size:clamp(12px,1.7vw,15.5px);margin-top:12px;color:var(--ink);}
+.step .xp{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-top:2px;}
+.step.here .lvl{color:var(--blue);}
+.step.here::after{content:"Léa est ici";position:absolute;top:-26px;left:50%;transform:translateX(-50%);
+  background:var(--red);color:#fff;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:100px;white-space:nowrap;font-family:var(--body);}
+.dot{width:15px;height:15px;border-radius:50%;background:var(--card);border:3px solid var(--blue);margin:8px auto 0;position:relative;z-index:2;}
+.step.here .dot{background:var(--gold);border-color:var(--red);box-shadow:0 0 0 5px rgba(212,42,28,.18);}
+.step.locked .ava{filter:grayscale(1) opacity(.4);}
+.step.locked .lvl,.step.locked .xp{color:var(--faint);}
+
+.xpbar-wrap{margin-top:26px;padding-top:22px;border-top:1px dashed var(--hair);}
+.xpbar-top{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;color:var(--ink-soft);margin-bottom:8px;}
+.xpbar-top b{font-family:var(--mono);color:var(--blue);}
+.xpbar{height:16px;border-radius:100px;background:var(--blue-tint);overflow:hidden;position:relative;}
+.xpbar>i{display:block;height:100%;width:0;border-radius:100px;
+  background:linear-gradient(90deg,var(--blue),var(--gold));transition:width 1.4s cubic-bezier(.22,1,.36,1);}
+.evo-note{margin-top:16px;font-size:14px;color:var(--faint);display:flex;align-items:center;gap:8px;}
+
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;}
+.how .c{background:var(--card);border:1px solid var(--hair);border-radius:16px;padding:18px;}
+.how .c .k{font-size:26px;}
+.how .c h4{font-family:var(--disp);font-weight:700;font-size:16px;margin:8px 0 4px;}
+.how .c p{font-size:13.5px;color:var(--ink-soft);}
+
+/* ---------- BADGES ---------- */
+.progress-line{display:flex;align-items:center;gap:14px;margin-bottom:26px;flex-wrap:wrap;}
+.progress-line .pct{font-family:var(--disp);font-weight:800;font-size:40px;color:var(--green);line-height:1;}
+.progress-line .meta{font-size:14.5px;color:var(--ink-soft);}
+.grid-badges{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.bcard{background:var(--card);border:1px solid var(--hair);border-radius:18px;padding:20px 16px;text-align:center;
+  position:relative;transition:transform .25s ease,box-shadow .25s ease;overflow:hidden;}
+.bcard:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+.bcard .ic{font-size:38px;line-height:1;filter:drop-shadow(0 5px 8px rgba(18,25,58,.16));}
+.bcard .nm{font-family:var(--disp);font-weight:600;font-size:13.5px;margin-top:12px;color:var(--ink);line-height:1.2;}
+.bcard .code{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:5px;}
+.bcard.on{border-color:var(--gold);background:linear-gradient(180deg,var(--gold-tint),var(--card));}
+.bcard.on::before{content:"✓ Maîtrisé";position:absolute;top:9px;right:9px;background:var(--green);color:#fff;
+  font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:100px;font-family:var(--body);}
+.bcard.off .ic{filter:grayscale(1) opacity(.35);}
+.bcard.off .nm{color:var(--faint);}
+.bcard.off::before{content:"🔒";position:absolute;top:9px;right:11px;font-size:12px;opacity:.5;}
+
+/* ---------- TROPHIES ---------- */
+.grid-tro{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.tro{background:var(--card);border:1px solid var(--hair);border-radius:18px;padding:20px 16px;text-align:center;transition:transform .25s;}
+.tro:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+.tro .ic{font-size:40px;line-height:1;}
+.tro .nm{font-family:var(--disp);font-weight:700;font-size:15px;margin:10px 0 5px;}
+.tro .ds{font-size:12.5px;color:var(--ink-soft);line-height:1.4;}
+.tro.on{background:linear-gradient(180deg,#fff6e0,var(--card));border-color:var(--gold);
+  box-shadow:0 10px 26px rgba(226,163,39,.22);}
+.tro.on .ic{filter:drop-shadow(0 4px 10px rgba(226,163,39,.5));animation:shine 3s ease-in-out infinite;}
+.tro.off{opacity:.62;}
+.tro.off .ic{filter:grayscale(.7) opacity(.5);}
+@keyframes shine{0%,100%{transform:scale(1)}50%{transform:scale(1.09) rotate(-3deg)}}
+
+/* ---------- LEADERBOARD ---------- */
+.board{background:linear-gradient(160deg,var(--blue-deep),#0c1c52);border-radius:26px;padding:34px 28px;color:#fff;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.board::before{content:"";position:absolute;top:-60px;right:-40px;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,207,92,.28),transparent 65%);}
+.board h3{color:#fff;font-size:22px;font-weight:700;position:relative;}
+.board .sub{color:#b9c6ee;font-size:13.5px;margin-bottom:26px;position:relative;}
+.podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:12px;align-items:end;margin-bottom:22px;position:relative;}
+.pod{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:16px 16px 0 0;
+  padding:16px 10px;text-align:center;backdrop-filter:blur(4px);}
+.pod .ava{font-size:38px;line-height:1;}
+.pod .nm{font-weight:700;font-size:14px;margin-top:8px;}
+.pod .xp{font-family:var(--mono);font-size:12.5px;color:var(--gold-bright);margin-top:2px;}
+.pod .rk{font-family:var(--disp);font-weight:800;font-size:20px;opacity:.6;}
+.pod.p1{padding-bottom:44px;background:linear-gradient(180deg,rgba(255,207,92,.28),rgba(255,255,255,.06));border-color:var(--gold);}
+.pod.p2{padding-bottom:30px;}.pod.p3{padding-bottom:20px;}
+.rows{position:relative;display:flex;flex-direction:column;gap:8px;}
+.row{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.06);border-radius:12px;padding:10px 16px;}
+.row .rk{font-family:var(--mono);width:26px;color:#9fb0e0;font-size:13px;}
+.row .ava{font-size:23px;}
+.row .nm{flex:1;font-weight:600;font-size:14.5px;}
+.row .xp{font-family:var(--mono);color:var(--gold-bright);font-size:13.5px;}
+.row.you{background:linear-gradient(90deg,rgba(212,42,28,.85),rgba(212,42,28,.55));border:1px solid #ff8a7a;}
+.row.you .nm::after{content:" — toi";color:#ffd9d3;font-weight:400;}
+.row.you .rk,.row.you .xp{color:#fff;}
+.priv{margin-top:20px;font-size:12.5px;color:#aebbe5;display:flex;gap:8px;align-items:flex-start;position:relative;}
+
+/* ---------- CLOSE ---------- */
+.close{background:var(--card);border:1px solid var(--hair);border-radius:26px;padding:40px 34px;box-shadow:var(--shadow);}
+.close-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:24px;}
+.close-grid .c .k{font-size:30px;}
+.close-grid .c h4{font-family:var(--disp);font-weight:700;font-size:17px;margin:8px 0 5px;}
+.close-grid .c p{font-size:14px;color:var(--ink-soft);}
+.cta{margin-top:34px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--hair);padding-top:26px;}
+.brandline{display:flex;align-items:center;gap:12px;}
+.imedias{font-family:var(--disp);font-weight:800;font-size:18px;color:var(--ink);}
+.imedias b{color:var(--red);}
+.url{font-family:var(--mono);font-size:14px;color:var(--blue);font-weight:600;background:var(--blue-tint);
+  padding:9px 16px;border-radius:100px;}
+.foot{text-align:center;color:var(--faint);font-size:12.5px;padding:34px 0 50px;}
+.foot .disc{max-width:60ch;margin:0 auto;}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:none;}
+
+@media (max-width:820px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-art{order:-1;} .badge-icon{width:120px;height:120px;}
+  .how,.close-grid{grid-template-columns:1fr;}
+  .grid-badges,.grid-tro{grid-template-columns:repeat(2,1fr);}
+  .evo{overflow-x:auto;} .evo::before{left:8%;right:8%;}
+  .step{min-width:80px;}
+  .podium{grid-template-columns:1fr;} .pod{border-radius:16px;padding-bottom:16px!important;}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}
+  .reveal{opacity:1;transform:none;} .xpbar>i{transition:none;}}
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <a class="tb-back" href="/">← Productions iMédias</a>
+  <a class="tb-cta" href="https://electricite.questedu.ca" target="_blank" rel="noopener">Essayer ÉlectricitéQuest →</a>
+</div>
+<style>
+.site-topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:11px 22px;background:rgba(246,242,234,.86);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--hair);}
+.tb-back{font-family:var(--body);font-weight:600;font-size:14px;color:var(--ink-soft);text-decoration:none;}
+.tb-back:hover{color:var(--primary);}
+.tb-cta{font-family:var(--body);font-weight:700;font-size:13.5px;color:#fff;text-decoration:none;
+  background:linear-gradient(180deg,var(--primary),var(--primary-deep));padding:9px 16px;border-radius:100px;
+  box-shadow:0 4px 12px rgba(18,25,58,.18);}
+.tb-cta:hover{filter:brightness(1.06);}
+</style>
+<div class="wrap">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Productions iMédias · Apprentissage gamifié</div>
+        <h1>Électricité<span class="spark">Quest</span></h1>
+        <div class="hero-sub">L'élève ne « révise » pas.<br>Il progresse, gagne des niveaux et vise le sommet.</div>
+        <p class="lead">Chaque bonne réponse rapporte de l'expérience. L'expérience fait grimper de niveau, fait évoluer l'avatar, débloque des badges et des trophées — et fait monter l'élève au classement de sa classe.</p>
+        <div class="chips">
+          <span class="chip">⚡ DEP <b>5295</b></span>
+          <span class="chip">🎯 <b>8</b> compétences</span>
+          <span class="chip">🧩 <b>120</b> défis</span>
+          <span class="chip">🏆 <b>6</b> niveaux · <b>8</b> trophées</span>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="orb"></div>
+        <svg class="badge-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Icône ÉlectricitéQuest">
+          <defs>
+            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2e4bb0"/><stop offset="55%" stop-color="#1b2f78"/><stop offset="100%" stop-color="#0e1a49"/></linearGradient>
+            <linearGradient id="br" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f0dea0"/><stop offset="48%" stop-color="#c9a961"/><stop offset="100%" stop-color="#96762f"/></linearGradient>
+            <linearGradient id="bo" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff2c4"/><stop offset="55%" stop-color="#f4cf5a"/><stop offset="100%" stop-color="#e0a726"/></linearGradient>
+          </defs>
+          <rect width="512" height="512" rx="104" fill="url(#bg)"/>
+          <rect x="36" y="36" width="440" height="440" rx="76" fill="none" stroke="url(#br)" stroke-width="13"/>
+          <path d="M300 78 L150 292 L242 292 L206 434 L378 220 L280 220 Z" fill="url(#bo)" stroke="#7a5a12" stroke-width="6" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="persona reveal">
+      <div class="ava">🐲</div>
+      <div class="txt"><b>Rencontrez Léa,</b> élève en électricité. Elle a fait <span class="mono">620 XP</span>, atteint le niveau <b>Compétente</b>, maîtrisé <span class="mono">5 des 8</span> compétences et grimpé au <span class="mono">4ᵉ</span> rang de sa classe. Voici son parcours. ↓</div>
+    </div>
+  </section>
+
+  <!-- ============ 1 · PROGRESSION ============ -->
+  <section>
+    <div class="s-head reveal">
+      <div class="eyebrow"><span class="s-num">01</span> La progression</div>
+      <h2>De l'œuf au dragon</h2>
+      <p class="lead">L'avatar de l'élève évolue en 12 stades à mesure que l'XP grimpe. Six niveaux jalonnent le parcours — chacun se débloque à un seuil d'expérience.</p>
+    </div>
+
+    <div class="ladder reveal">
+      <div class="evo">
+        <div class="step"><span class="ava">🥚</span><div class="dot"></div><div class="lvl">Novice</div><div class="xp">0 XP</div></div>
+        <div class="step"><span class="ava">🦎</span><div class="dot"></div><div class="lvl">Apprentie</div><div class="xp">200 XP</div></div>
+        <div class="step here"><span class="ava">🐲</span><div class="dot"></div><div class="lvl">Compétente</div><div class="xp">500 XP</div></div>
+        <div class="step locked"><span class="ava">🐉</span><div class="dot"></div><div class="lvl">Chevronnée</div><div class="xp">1000 XP</div></div>
+        <div class="step locked"><span class="ava">🐉</span><div class="dot"></div><div class="lvl">Experte</div><div class="xp">2000 XP</div></div>
+        <div class="step locked"><span class="ava">🐉</span><div class="dot"></div><div class="lvl">Maître</div><div class="xp">3500 XP</div></div>
+      </div>
+
+      <div class="xpbar-wrap">
+        <div class="xpbar-top"><span>Niveau actuel : <b>Compétente</b></span><span>Prochain palier : <b>Chevronnée · 1000 XP</b></span></div>
+        <div class="xpbar"><i data-w="62%"></i></div>
+        <div class="evo-note">✦ <span>620 / 1000 XP — encore 380 XP pour évoluer</span></div>
+      </div>
+    </div>
+
+    <div class="how">
+      <div class="c reveal"><div class="k">⚡</div><h4>Gagner de l'XP</h4><p>Chaque palier réussi (Débutant, Intermédiaire, Avancé) rapporte de l'expérience selon le score.</p></div>
+      <div class="c reveal"><div class="k">🐉</div><h4>Faire évoluer l'avatar</h4><p>Dragon, licorne, phénix ou griffon : l'élève choisit sa créature, qui grandit de l'œuf au légendaire.</p></div>
+      <div class="c reveal"><div class="k">🔓</div><h4>Débloquer la suite</h4><p>Réussir une compétence ouvre la suivante — la progression est guidée, jamais aléatoire.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ 2 · BADGES ============ -->
+  <section>
+    <div class="s-head reveal">
+      <div class="eyebrow"><span class="s-num">02</span> Les badges</div>
+      <h2>Une compétence maîtrisée = un badge</h2>
+      <p class="lead">Réussir le palier <b>Avancé</b> d'un module décerne son badge de maîtrise. Les huit badges dessinent la carte complète du métier.</p>
+    </div>
+    <div class="progress-line reveal">
+      <div class="pct">63%</div>
+      <div class="meta"><b>5 des 8 compétences maîtrisées.</b><br>Chaque badge obtenu rapproche du trophée « Diplômé virtuel ».</div>
+    </div>
+    <div class="grid-badges">
+      <div class="bcard on reveal"><div class="ic">🦺</div><div class="nm">Santé et sécurité</div><div class="code">5295-01</div></div>
+      <div class="bcard on reveal"><div class="ic">⚡</div><div class="nm">Circuits de base</div><div class="code">5295-02</div></div>
+      <div class="bcard on reveal"><div class="ic">🧰</div><div class="nm">Outils et mesures</div><div class="code">5295-03</div></div>
+      <div class="bcard on reveal"><div class="ic">📐</div><div class="nm">Lecture de plans</div><div class="code">5295-04</div></div>
+      <div class="bcard on reveal"><div class="ic">🏠</div><div class="nm">Câblage résidentiel</div><div class="code">5295-05</div></div>
+      <div class="bcard off reveal"><div class="ic">📖</div><div class="nm">Code de construction</div><div class="code">5295-06</div></div>
+      <div class="bcard off reveal"><div class="ic">⚙️</div><div class="nm">Moteurs et commandes</div><div class="code">5295-07</div></div>
+      <div class="bcard off reveal"><div class="ic">🔍</div><div class="nm">Dépannage et entretien</div><div class="code">5295-08</div></div>
+    </div>
+  </section>
+
+  <!-- ============ 3 · TROPHIES ============ -->
+  <section>
+    <div class="s-head reveal">
+      <div class="eyebrow"><span class="s-num">03</span> Les trophées</div>
+      <h2>Des défis qui donnent envie de continuer</h2>
+      <p class="lead">Au-delà des badges, huit trophées récompensent la constance, la perfection et l'audace. Ceux qui brillent, Léa les a déjà gagnés.</p>
+    </div>
+    <div class="grid-tro">
+      <div class="tro on reveal"><div class="ic">🥉</div><div class="nm">Premier pas</div><div class="ds">Réussir son premier palier</div></div>
+      <div class="tro on reveal"><div class="ic">💯</div><div class="nm">Sans faute</div><div class="ds">Obtenir 100 % à un palier</div></div>
+      <div class="tro on reveal"><div class="ic">🦺</div><div class="nm">Zone sécurité</div><div class="ds">Réussir le module Santé et sécurité</div></div>
+      <div class="tro on reveal"><div class="ic">🔥</div><div class="nm">Assidu</div><div class="ds">Se connecter 3 jours différents</div></div>
+      <div class="tro off reveal"><div class="ic">🧩</div><div class="nm">Bon association</div><div class="ds">Réussir 15 questions d'association</div></div>
+      <div class="tro off reveal"><div class="ic">🏅</div><div class="nm">Sur le podium</div><div class="ds">Atteindre le top 3 du classement</div></div>
+      <div class="tro off reveal"><div class="ic">🥈</div><div class="nm">Mi-parcours</div><div class="ds">Maîtriser la moitié du programme</div></div>
+      <div class="tro off reveal"><div class="ic">🏆</div><div class="nm">Diplômé virtuel</div><div class="ds">Maîtriser tout le programme</div></div>
+    </div>
+  </section>
+
+  <!-- ============ 4 · LEADERBOARD ============ -->
+  <section>
+    <div class="s-head reveal">
+      <div class="eyebrow"><span class="s-num">04</span> Le classement</div>
+      <h2>Une saine émulation, en classe</h2>
+      <p class="lead">Chaque élève voit sa position dans le palmarès de sa classe, classé par expérience. De quoi transformer la révision en défi collectif.</p>
+    </div>
+    <div class="board reveal">
+      <h3>🏆 Palmarès — Groupe Électricité 101</h3>
+      <div class="sub">Aperçu (classe démo) · classé par XP</div>
+      <div class="podium">
+        <div class="pod p2"><div class="rk">2</div><div class="ava">🦅</div><div class="nm">Xavier L.</div><div class="xp">2 450 XP</div></div>
+        <div class="pod p1"><div class="rk">1</div><div class="ava">🦄</div><div class="nm">Mia-Rose T.</div><div class="xp">3 120 XP</div></div>
+        <div class="pod p3"><div class="rk">3</div><div class="ava">🐉</div><div class="nm">Sam D.</div><div class="xp">1 780 XP</div></div>
+      </div>
+      <div class="rows">
+        <div class="row you"><span class="rk">4</span><span class="ava">🐲</span><span class="nm">Léa</span><span class="xp">620 XP</span></div>
+        <div class="row"><span class="rk">5</span><span class="ava">🦁</span><span class="nm">Kevin R.</span><span class="xp">560 XP</span></div>
+        <div class="row"><span class="rk">6</span><span class="ava">🦎</span><span class="nm">Noémie B.</span><span class="xp">430 XP</span></div>
+        <div class="row"><span class="rk">7</span><span class="ava">🐣</span><span class="nm">Tommy G.</span><span class="xp">120 XP</span></div>
+      </div>
+      <div class="priv">🔒 <span>Respect de la vie privée : l'élève ne partage qu'un pseudonyme et un avatar — aucune donnée personnelle n'est exposée.</span></div>
+    </div>
+  </section>
+
+  <!-- ============ 5 · CLOSE ============ -->
+  <section>
+    <div class="close reveal">
+      <div class="s-head" style="margin-bottom:6px;">
+        <div class="eyebrow"><span class="s-num">05</span> Côté centre de formation</div>
+        <h2>Simple à essayer, pensé pour l'enseignant</h2>
+      </div>
+      <div class="close-grid">
+        <div class="c"><div class="k">🎁</div><h4>Essai gratuit</h4><p>Les 3 premiers modules sont gratuits (essai de 7 jours). Un code d'accès débloque tout le programme.</p></div>
+        <div class="c"><div class="k">📊</div><h4>Tableau de bord</h4><p>L'enseignant suit la progression de son groupe ; une pastille signale l'élève qui coince sur un module.</p></div>
+        <div class="c"><div class="k">📱</div><h4>Aucune installation</h4><p>Ça fonctionne dans le navigateur, sur téléphone, tablette ou ordinateur. Rien à installer.</p></div>
+      </div>
+      <div class="cta">
+        <div class="brandline">
+          <span class="imedias">Productions <b>iMédias</b></span>
+        </div>
+        <span class="url">electricite.questedu.ca</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <p class="disc">ÉlectricitéQuest — DEP 5295. Avatars, niveaux, badges, trophées et classement reflètent le fonctionnement réel de l'application. Données de classe et de progression fournies à titre d'exemple ; le contenu pédagogique est à valider par les enseignants du programme.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);
+      var bar=e.target.querySelector?e.target.querySelector('.xpbar>i'):null;
+    }});
+  },{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  // remplir la barre d'XP quand le ladder apparaît
+  var lad=document.querySelector('.xpbar>i');
+  if(lad){ var io2=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){ setTimeout(function(){lad.style.width=lad.getAttribute('data-w');},250); io2.disconnect(); }});},{threshold:.4});
+    io2.observe(document.querySelector('.ladder')); }
+})();
+</script>
+</body>
+</html>
