@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Politique de confidentialité — HockeyQuest · Productions iMédias</title>
+<link rel="icon" href="favicon.svg">
+<meta name="description" content="Politique de confidentialité de l'application HockeyQuest de Productions iMédias : aucun compte, aucun serveur, données conservées sur l'appareil, conforme à la Loi 25 du Québec.">
+<style>
+:root{
+  --bg:#f7f3f1; --panel:#ffffff; --panel2:#faf6f4; --ink:#1b1614; --muted:#6f6560;
+  --line:#e7ded9; --accent:#d42a1c; --accent2:#8f160c; --gold:#b07d2a;
+  --ok:#3f7a4e; --warn:#b06a1f;
+  --shadow:0 1px 2px rgba(70,30,20,.05), 0 10px 30px rgba(70,30,20,.06);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --bg:#17120f; --panel:#221b17; --panel2:#1e1814; --ink:#f1ebe6; --muted:#a89b93;
+    --line:#332a24; --accent:#f2543f; --accent2:#f2543f; --gold:#dCA646; --ok:#6fbf82; --warn:#d99a4a;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.4); }
+}
+:root[data-theme="light"]{ --bg:#f7f3f1; --panel:#ffffff; --panel2:#faf6f4; --ink:#1b1614; --muted:#6f6560;
+  --line:#e7ded9; --accent:#d42a1c; --accent2:#8f160c; --gold:#b07d2a; --ok:#3f7a4e; --warn:#b06a1f;
+  --shadow:0 1px 2px rgba(70,30,20,.05), 0 10px 30px rgba(70,30,20,.06); }
+:root[data-theme="dark"]{ --bg:#17120f; --panel:#221b17; --panel2:#1e1814; --ink:#f1ebe6; --muted:#a89b93;
+  --line:#332a24; --accent:#f2543f; --accent2:#f2543f; --gold:#dCA646; --ok:#6fbf82; --warn:#d99a4a;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.4); }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:820px;margin:0 auto;padding:40px 22px 90px;}
+a{color:var(--accent);text-underline-offset:2px;}
+
+/* retour accueil */
+.backlink{display:inline-flex;align-items:center;gap:8px;font-size:.9rem;font-weight:600;text-decoration:none;color:var(--accent);margin-bottom:24px;padding:8px 15px;border:1px solid var(--line);border-radius:9px;background:var(--panel);box-shadow:var(--shadow);transition:border-color .15s ease,transform .15s ease;}
+.backlink:hover{border-color:var(--accent);transform:translateX(-2px);}
+.backlink .arw{font-size:1.05em;line-height:1;}
+.backlink.footer{margin:18px 0 0;}
+h1,h2,h3{font-family:var(--serif);font-weight:600;text-wrap:balance;line-height:1.2;}
+
+/* header */
+.kicker{display:flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;font-family:var(--sans);}
+.dot{width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f7b0a4,var(--accent) 55%,var(--accent2));box-shadow:0 1px 3px rgba(143,22,12,.4);flex:none;}
+h1{font-size:2.35rem;margin:.35em 0 .15em;letter-spacing:-.015em;}
+.lede{color:var(--muted);font-size:1.06rem;max-width:60ch;margin:.2em 0 0;}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:18px;font-size:.86rem;color:var(--muted);font-family:var(--mono);}
+.meta-row b{color:var(--ink);font-weight:600;}
+.rule{height:3px;background:var(--accent);border:0;width:56px;margin:22px 0 0;border-radius:2px;}
+
+/* draft banner */
+.banner{display:flex;gap:12px;align-items:flex-start;margin:26px 0 0;padding:14px 16px;border:1px solid var(--line);border-left:4px solid var(--warn);border-radius:10px;background:var(--panel2);font-size:.92rem;}
+.banner .ic{color:var(--warn);font-size:1.1rem;line-height:1.4;flex:none;}
+
+/* summary card */
+.essentiel{margin:28px 0 6px;padding:22px 24px;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);}
+.essentiel h2{font-size:1.15rem;margin:0 0 12px;}
+.essentiel ul{margin:0;padding:0;list-style:none;display:grid;gap:10px;}
+.essentiel li{display:flex;gap:11px;align-items:flex-start;}
+.essentiel li .b{color:var(--accent);font-weight:800;flex:none;line-height:1.5;}
+
+/* TOC */
+.toc{margin:30px 0 10px;padding:18px 22px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;}
+.toc .lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:10px;}
+.toc ol{margin:0;padding:0;list-style:none;columns:2;column-gap:28px;font-size:.92rem;}
+.toc li{margin:0 0 7px;break-inside:avoid;}
+.toc a{color:var(--ink);text-decoration:none;display:flex;gap:9px;}
+.toc a:hover{color:var(--accent);}
+.toc a .n{color:var(--accent);font-family:var(--mono);font-weight:700;font-size:.82rem;min-width:1.4em;}
+
+/* sections */
+section{margin-top:38px;scroll-margin-top:20px;}
+section > h2{font-size:1.42rem;margin:0 0 .5em;display:flex;gap:.5em;align-items:baseline;}
+section > h2 .n{font-family:var(--mono);font-size:1rem;color:var(--accent);font-weight:700;}
+section h3{font-size:1.08rem;margin:1.4em 0 .3em;}
+p{margin:.7em 0;}
+ul.body,ol.body{margin:.6em 0;padding-left:1.25em;}
+ul.body li,ol.body li{margin:.4em 0;}
+strong{font-weight:650;}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums;}
+code{font-family:var(--mono);background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:.9em;}
+.tbd{color:var(--warn);font-style:italic;font-size:.92em;}
+
+/* responsable card */
+.contact-card{margin-top:16px;padding:20px 22px;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);}
+.contact-card h3{margin:0 0 6px;font-size:1.05rem;}
+.contact-card p{margin:.2em 0;font-size:.95rem;}
+.contact-card .role{font-family:var(--mono);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700;}
+
+/* rights table */
+.tablewrap{overflow-x:auto;margin:.8em 0;}
+table{border-collapse:collapse;width:100%;font-size:.93rem;min-width:460px;}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+th{font-family:var(--sans);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;}
+td .r{font-weight:600;}
+
+footer{margin-top:48px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:.86rem;}
+.totop{position:fixed;right:18px;bottom:18px;background:var(--ink);color:var(--bg);border:0;border-radius:10px;padding:9px 13px;font:inherit;font-size:.82rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s;box-shadow:var(--shadow);}
+.totop.show{opacity:.92;pointer-events:auto;}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media (max-width:560px){ .wrap{padding:28px 15px 80px} h1{font-size:1.9rem} .toc ol{columns:1} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="backlink" href="index.html"><span class="arw" aria-hidden="true">←</span> Retour à l'accueil</a>
+  <header>
+    <div class="kicker"><span class="dot"></span>Productions iMédias · HockeyQuest</div>
+    <h1>Politique de confidentialité</h1>
+    <p class="lede">Comment l'application <strong>HockeyQuest</strong> traite les renseignements — aucun compte, aucun serveur à nous, tout reste sur ton appareil, conformément à la <em>Loi 25</em> du Québec.</p>
+    <div class="meta-row">
+      <span>Entrée en vigueur : <b>6 octobre 2026</b></span>
+      <span>Version : <b>1.0</b></span>
+      <span>Dernière mise à jour : <b>6 octobre 2026</b></span>
+    </div>
+    <hr class="rule">
+  </header>
+
+  <div class="essentiel">
+    <h2>L'essentiel, en clair</h2>
+    <ul>
+      <li><span class="b">→</span><span><strong>Aucun compte, aucun serveur à nous.</strong> Nous ne recevons et ne conservons aucune donnée te concernant. Tout ce que l'application mémorise reste sur ton appareil.</span></li>
+      <li><span class="b">→</span><span><strong>Les publicités ne sont pas personnalisées.</strong> Nous ne demandons pas l'autorisation de suivi entre applications.</span></li>
+      <li><span class="b">→</span><span><strong>Les achats sont traités par Apple.</strong> Nous ne voyons aucune information de paiement.</span></li>
+      <li><span class="b">→</span><span><strong>Le classement est facultatif</strong> et géré par Game Center : il affiche ton pseudonyme Apple, jamais le nom que tu inscris dans le jeu.</span></li>
+    </ul>
+  </div>
+
+  <nav class="toc" aria-label="Sommaire">
+    <div class="lbl">Sommaire</div>
+    <ol>
+      <li><a href="#s1"><span class="n">1</span> Qui nous sommes</a></li>
+      <li><a href="#s2"><span class="n">2</span> Ce qu'est HockeyQuest</a></li>
+      <li><a href="#s3"><span class="n">3</span> Aucun compte, aucun serveur</a></li>
+      <li><a href="#s4"><span class="n">4</span> Ce qui reste sur ton appareil</a></li>
+      <li><a href="#s5"><span class="n">5</span> Classement Game Center</a></li>
+      <li><a href="#s6"><span class="n">6</span> Publicités (AdMob)</a></li>
+      <li><a href="#s7"><span class="n">7</span> Achats intégrés</a></li>
+      <li><a href="#s8"><span class="n">8</span> Partage de ton score</a></li>
+      <li><a href="#s9"><span class="n">9</span> Récapitulatif des tiers</a></li>
+      <li><a href="#s10"><span class="n">10</span> Conservation et suppression</a></li>
+      <li><a href="#s11"><span class="n">11</span> Tes droits</a></li>
+      <li><a href="#s12"><span class="n">12</span> Modifications</a></li>
+      <li><a href="#s13"><span class="n">13</span> Nous joindre</a></li>
+    </ol>
+  </nav>
+
+  <section id="s1">
+    <h2><span class="n">1.</span> Qui nous sommes</h2>
+    <p><strong>Productions iMédias</strong> (Bonaventure, Québec) conçoit et publie l'application <strong>HockeyQuest</strong>. Nous sommes responsables de la présente politique.</p>
+    <div class="contact-card">
+      <p class="role">Responsable de la protection des renseignements personnels</p>
+      <h3>Philippe Beaubien</h3>
+      <p>Productions iMédias — Bonaventure (Québec)</p>
+      <p><a href="mailto:philippe.beaubien@gmail.com">philippe.beaubien@gmail.com</a></p>
+    </div>
+  </section>
+  <section id="s2">
+    <h2><span class="n">2.</span> Ce qu'est HockeyQuest</h2>
+    <p>HockeyQuest est un <strong>jeu-questionnaire sur le hockey</strong> : 385 questions réparties en cinq catégories (Équipes &amp; Rivalités, Légendes &amp; Records, Moments cultes, Règles &amp; Culture du jeu, Repêchage &amp; Carrières). L'application est offerte en français et en anglais.</p>
+    <p>Elle est gratuite, financée par la publicité, et propose des achats facultatifs de jetons permettant de geler le chronomètre.</p>
+    <p>Cette politique est distincte de celle des applications <a href="confidentialite.html">Quest de formation professionnelle</a>, parce que HockeyQuest fonctionne autrement : elle affiche de la publicité, propose des achats intégrés et un classement en ligne.</p>
+  </section>
+  <section id="s3">
+    <h2><span class="n">3.</span> Aucun compte, aucun serveur à nous</h2>
+    <p>HockeyQuest ne demande <strong>ni compte, ni mot de passe, ni adresse courriel</strong>. Tu n'as rien à créer pour jouer.</p>
+    <p>Plus important encore : <strong>l'application ne communique avec aucun serveur appartenant à Productions iMédias.</strong> Nous n'exploitons aucune base de données la concernant. Nous ne recevons, ne voyons et ne conservons donc <strong>aucune</strong> donnée sur toi ou sur tes parties.</p>
+    <p>Les seuls échanges avec l'extérieur passent par trois services tiers bien identifiés — Google (publicités) et Apple (achats, classement) — décrits aux sections 5, 6 et 7.</p>
+  </section>
+  <section id="s4">
+    <h2><span class="n">4.</span> Ce qui reste sur ton appareil</h2>
+    <p>Tout ce que l'application mémorise est enregistré <strong>uniquement dans la mémoire locale de ton appareil</strong> :</p>
+    <ul class="body">
+      <li>Le <strong>nom de joueur</strong> que tu choisis d'inscrire, et l'équipe que tu sélectionnes</li>
+      <li>Ton <strong>solde de jetons</strong></li>
+      <li>Tes <strong>badges</strong> et ta progression</li>
+      <li>L'<strong>historique de tes parties</strong> et les points accumulés</li>
+      <li>Les questions déjà vues, pour éviter de te les reposer</li>
+      <li>Ta <strong>langue d'affichage</strong> et la date de ton dernier tour de roue</li>
+    </ul>
+    <p>Le nom de joueur que tu inscris est un champ libre : rien ne t'oblige à y mettre ton vrai nom, et <strong>il ne quitte jamais ton appareil</strong>. Il sert seulement à afficher tes résultats dans l'application.</p>
+    <p>Ces données disparaissent entièrement si tu désinstalles HockeyQuest.</p>
+  </section>
+  <section id="s5">
+    <h2><span class="n">5.</span> Classement en ligne (Game Center d'Apple)</h2>
+    <p>HockeyQuest propose un <strong>classement entre joueurs</strong> fourni par <strong>Game Center</strong>, le service d'Apple. Son usage est <strong>facultatif</strong> : si tu refuses de t'y connecter, le reste du jeu fonctionne normalement.</p>
+    <p>Si tu l'utilises, c'est Apple — et non Productions iMédias — qui gère le classement. Apple transmet à l'application ton <strong>pseudonyme Game Center</strong> et ton score, afin de les afficher dans la liste. Le pseudonyme Game Center est celui que tu as configuré auprès d'Apple ; ce n'est pas le nom de joueur local décrit à la section précédente, et ce n'est pas nécessairement ton vrai nom.</p>
+    <p>Nous n'avons accès à aucune autre information sur ton compte Apple. La gestion de tes données Game Center (y compris leur suppression) se fait dans les réglages de ton appareil Apple et relève de la <a href="https://www.apple.com/legal/privacy/">politique de confidentialité d'Apple</a>.</p>
+  </section>
+  <section id="s6">
+    <h2><span class="n">6.</span> Publicités (Google AdMob)</h2>
+    <p>HockeyQuest est gratuite et affiche des publicités fournies par <strong>Google AdMob</strong> : une publicité au démarrage, et une publicité facultative que tu choisis de regarder pour gagner des jetons.</p>
+    <p>Nous ne demandons pas l'autorisation de suivi entre applications (<em>App Tracking Transparency</em>). Les publicités affichées dans HockeyQuest ne sont donc <strong>pas personnalisées</strong> en fonction de ton activité dans d'autres applications ou sur d'autres sites.</p>
+    <p>Google AdMob recueille néanmoins certaines données techniques nécessaires au fonctionnement de la publicité : modèle d'appareil, version du système d'exploitation, pays, et un identifiant publicitaire non rattaché à ton identité. Ces données sont traitées par Google selon sa propre politique : <a href="https://policies.google.com/technologies/ads">policies.google.com/technologies/ads</a>.</p>
+    <p>Productions iMédias ne reçoit de Google que des statistiques agrégées (nombre d'affichages, revenus) qui ne permettent d'identifier personne.</p>
+  </section>
+  <section id="s7">
+    <h2><span class="n">7.</span> Achats intégrés</h2>
+    <p>HockeyQuest propose des <strong>packs de jetons</strong> en achat intégré. Ces transactions sont <strong>entièrement traitées par Apple</strong> via l'App Store.</p>
+    <p>Productions iMédias ne voit, ne reçoit et ne conserve <strong>aucune information de paiement</strong> : ni numéro de carte, ni adresse de facturation, ni identité. Cette information reste entre toi et Apple.</p>
+  </section>
+  <section id="s8">
+    <h2><span class="n">8.</span> Partage de ton score</h2>
+    <p>L'application te permet de partager une image de ton score ou de tes badges. Cette image est <strong>produite sur ton appareil</strong>, puis remise au menu de partage d'iOS.</p>
+    <p>Tu choisis librement si tu la partages et avec quelle application (Messages, réseaux sociaux, courriel…). Rien n'est transmis à Productions iMédias, et rien n'est publié automatiquement. Une fois l'image remise à une autre application, ce sont les conditions de cette application qui s'appliquent.</p>
+  </section>
+  <section id="s9">
+    <h2><span class="n">9.</span> Récapitulatif des tiers</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Tiers</th><th>Rôle</th><th>Ce qu'il peut recevoir</th></tr></thead>
+        <tbody>
+          <tr><td class="r">Google AdMob</td><td>Affichage des publicités</td><td>Données techniques d'appareil et identifiant publicitaire</td></tr>
+          <tr><td class="r">Apple — App Store</td><td>Traitement des achats intégrés</td><td>Les informations de paiement, que nous ne voyons pas</td></tr>
+          <tr><td class="r">Apple — Game Center</td><td>Classement facultatif</td><td>Ton pseudonyme Game Center et ton score</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>En dehors de ces trois services, <strong>aucune donnée n'est vendue, louée ou communiquée à qui que ce soit.</strong></p>
+  </section>
+  <section id="s10">
+    <h2><span class="n">10.</span> Conservation et suppression</h2>
+    <p>Comme nous ne détenons aucune donnée te concernant, il n'y a rien à conserver ni à détruire de notre côté.</p>
+    <ul class="body">
+      <li><strong>Données locales</strong> (nom de joueur, jetons, badges, historique) : elles vivent sur ton appareil et sont <strong>effacées entièrement lorsque tu désinstalles l'application</strong>.</li>
+      <li><strong>Données Game Center</strong> : elles relèvent d'Apple et se gèrent dans les réglages de ton appareil.</li>
+      <li><strong>Données publicitaires</strong> : tu peux réinitialiser ou limiter ton identifiant publicitaire dans les réglages de confidentialité d'iOS.</li>
+    </ul>
+  </section>
+  <section id="s11">
+    <h2><span class="n">11.</span> Tes droits</h2>
+    <p>La <em>Loi 25</em> du Québec te reconnaît des droits d'accès, de rectification et de suppression à l'égard des renseignements personnels qu'une entreprise détient sur toi.</p>
+    <p>Dans le cas de HockeyQuest, <strong>Productions iMédias ne détient aucun renseignement personnel te concernant</strong> : il n'y a donc rien à consulter, corriger ou supprimer de notre côté. Tu gardes néanmoins le contrôle entier de tes données locales (en désinstallant l'application) et de tes données Game Center et publicitaires (dans les réglages de ton appareil).</p>
+    <p>Si tu as une question ou si tu crois que cette politique ne décrit pas fidèlement ce que fait l'application, écris-nous : nous te répondrons.</p>
+  </section>
+  <section id="s12">
+    <h2><span class="n">12.</span> Modifications de cette politique</h2>
+    <p>Si une version future de HockeyQuest ajoutait une fonction nécessitant un serveur à nous, un compte utilisateur ou la collecte de renseignements personnels, cette politique serait mise à jour <strong>avant</strong> la diffusion de cette version, et la nouvelle date figurerait en haut de la page.</p>
+  </section>
+  <section id="s13">
+    <h2><span class="n">13.</span> Nous joindre</h2>
+    <p>Pour toute question sur la présente politique ou sur le traitement des renseignements dans HockeyQuest :</p>
+    <div class="contact-card">
+      <p class="role">Écris-nous</p>
+      <h3>Philippe Beaubien</h3>
+      <p>Productions iMédias — Bonaventure (Québec)</p>
+      <p><a href="mailto:philippe.beaubien@gmail.com">philippe.beaubien@gmail.com</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Productions iMédias — Bonaventure (Québec). HockeyQuest.</p>
+    <p>La présente politique reflète nos pratiques en vigueur au 6 octobre 2026, conformément à la Loi 25 (loi modernisant des dispositions législatives du Québec en matière de protection des renseignements personnels).</p>
+    <a class="backlink footer" href="index.html"><span class="arw" aria-hidden="true">←</span> Retour à l'accueil</a>
+  </footer>
+</div>
+
+<button class="totop" id="totop" aria-label="Revenir en haut">↑ Haut</button>
+<script>
+  const tt=document.getElementById('totop');
+  addEventListener('scroll',()=>{tt.classList.toggle('show',scrollY>600);},{passive:true});
+  tt.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+  document.querySelectorAll('.toc a').forEach(a=>a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href')); if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});history.replaceState(null,'',a.getAttribute('href'));}
+  }));
+</script>
+</body>
+</html>
