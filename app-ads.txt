@@ -1,0 +1,12 @@
+# app-ads.txt — Productions iMédias
+# Declare les vendeurs autorises a vendre l'inventaire publicitaire des
+# applications de Productions iMedias (norme IAB Tech Lab app-ads.txt).
+# Sans ce fichier, une partie des acheteurs refusent d'encherir sur
+# l'inventaire, par protection contre la fraude : des revenus sont perdus
+# sans qu'aucune anomalie n'apparaisse dans le tableau de bord.
+#
+# Pour que Google trouve ce fichier, l'URL marketing de chaque app dans
+# App Store Connect doit pointer vers productions-imedias.com.
+#
+# Format : <domaine du systeme publicitaire>, <id editeur>, <relation>, <id TAG>
+google.com, pub-6352570384013155, DIRECT, f08c47fec0942fa0
